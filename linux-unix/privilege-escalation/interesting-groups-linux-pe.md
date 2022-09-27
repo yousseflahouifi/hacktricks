@@ -1,8 +1,25 @@
-# Interesting Groups - Linux PE
 
-## Sudo/Admin Groups
 
-### **PE - Method 1**
+<details>
+
+<summary><strong>Support HackTricks and get benefits!</strong></summary>
+
+- Do you work in a **cybersecurity company**? Do you want to see your **company advertised in HackTricks**? or do you want to have access to the **latest version of the PEASS or download HackTricks in PDF**? Check the [**SUBSCRIPTION PLANS**](https://github.com/sponsors/carlospolop)!
+
+- Discover [**The PEASS Family**](https://opensea.io/collection/the-peass-family), our collection of exclusive [**NFTs**](https://opensea.io/collection/the-peass-family)
+
+- Get the [**official PEASS & HackTricks swag**](https://peass.creator-spring.com)
+
+- **Join the** [**💬**](https://emojipedia.org/speech-balloon/) [**Discord group**](https://discord.gg/hRep4RUj7f) or the [**telegram group**](https://t.me/peass) or **follow** me on **Twitter** [**🐦**](https://github.com/carlospolop/hacktricks/tree/7af18b62b3bdc423e11444677a6a73d4043511e9/\[https:/emojipedia.org/bird/README.md)[**@carlospolopm**](https://twitter.com/carlospolopm)**.**
+
+- **Share your hacking tricks by submitting PRs to the** [**hacktricks github repo**](https://github.com/carlospolop/hacktricks)**.**
+
+</details>
+
+
+# Sudo/Admin Groups
+
+## **PE - Method 1**
 
 **Sometimes**, **by default \(or because some software needs it\)** inside the **/etc/sudoers** file you can find some of these lines:
 
@@ -22,7 +39,7 @@ If this is the case, to **become root you can just execute**:
 sudo su
 ```
 
-### PE - Method 2
+## PE - Method 2
 
 Find all suid binaries and check if there is the binary **Pkexec**:
 
@@ -70,7 +87,7 @@ pkttyagent --process <PID of session1> #Step 2, attach pkttyagent to session1
 ```
 {% endcode %}
 
-## Wheel Group
+# Wheel Group
 
 **Sometimes**, **by default** inside the **/etc/sudoers** file you can find this line:
 
@@ -86,7 +103,7 @@ If this is the case, to **become root you can just execute**:
 sudo su
 ```
 
-## Shadow Group
+# Shadow Group
 
 Users from the **group shadow** can **read** the **/etc/shadow** file:
 
@@ -96,7 +113,7 @@ Users from the **group shadow** can **read** the **/etc/shadow** file:
 
 So, read the file and try to **crack some hashes**.
 
-## Disk Group
+# Disk Group
 
  This privilege is almost **equivalent to root access** as you can access all the data inside of the machine.
 
@@ -119,7 +136,7 @@ debugfs:  dump /tmp/asd1.txt /tmp/asd2.txt
 
 However, if you try to **write files owned by root** \(like `/etc/shadow` or `/etc/passwd`\) you will have a "**Permission denied**" error.
 
-## Video Group
+# Video Group
 
 Using the command `w` you can find **who is logged on the system** and it will show an output like the following one:
 
@@ -146,7 +163,7 @@ Then modify the Width and Height to the ones used on the screen and check differ
 
 ![](../../.gitbook/assets/image%20%28295%29.png)
 
-## Root Group
+# Root Group
 
 It looks like by default **members of root group** could have access to **modify** some **service** configuration files or some **libraries** files or **other interesting things** that could be used to escalate privileges...
 
@@ -156,7 +173,7 @@ It looks like by default **members of root group** could have access to **modify
 find / -group root -perm -g=w 2>/dev/null
 ```
 
-## Docker Group
+# Docker Group
 
 You can mount the root filesystem of the host machine to an instance’s volume, so when the instance starts it immediately loads a `chroot` into that volume. This effectively gives you root on the machine.
 
@@ -164,7 +181,26 @@ You can mount the root filesystem of the host machine to an instance’s volume,
 
 {% embed url="https://fosterelli.co/privilege-escalation-via-docker.html" %}
 
-## lxc/lxd Group
+# lxc/lxd Group
 
 [lxc - Privilege Escalation](lxd-privilege-escalation.md)
+
+
+
+<details>
+
+<summary><strong>Support HackTricks and get benefits!</strong></summary>
+
+- Do you work in a **cybersecurity company**? Do you want to see your **company advertised in HackTricks**? or do you want to have access to the **latest version of the PEASS or download HackTricks in PDF**? Check the [**SUBSCRIPTION PLANS**](https://github.com/sponsors/carlospolop)!
+
+- Discover [**The PEASS Family**](https://opensea.io/collection/the-peass-family), our collection of exclusive [**NFTs**](https://opensea.io/collection/the-peass-family)
+
+- Get the [**official PEASS & HackTricks swag**](https://peass.creator-spring.com)
+
+- **Join the** [**💬**](https://emojipedia.org/speech-balloon/) [**Discord group**](https://discord.gg/hRep4RUj7f) or the [**telegram group**](https://t.me/peass) or **follow** me on **Twitter** [**🐦**](https://github.com/carlospolop/hacktricks/tree/7af18b62b3bdc423e11444677a6a73d4043511e9/\[https:/emojipedia.org/bird/README.md)[**@carlospolopm**](https://twitter.com/carlospolopm)**.**
+
+- **Share your hacking tricks by submitting PRs to the** [**hacktricks github repo**](https://github.com/carlospolop/hacktricks)**.**
+
+</details>
+
 

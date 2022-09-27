@@ -1,5 +1,19 @@
 # Wireshark tricks
 
+## Wireshark tricks
+
+<details>
+
+<summary><strong>Support HackTricks and get benefits!</strong></summary>
+
+* Do you work in a **cybersecurity company**? Do you want to see your **company advertised in HackTricks**? or do you want to have access to the **latest version of the PEASS or download HackTricks in PDF**? Check the [**SUBSCRIPTION PLANS**](https://github.com/sponsors/carlospolop)!
+* Discover [**The PEASS Family**](https://opensea.io/collection/the-peass-family), our collection of exclusive [**NFTs**](https://opensea.io/collection/the-peass-family)
+* Get the [**official PEASS & HackTricks swag**](https://peass.creator-spring.com)
+* **Join the** [**💬**](https://emojipedia.org/speech-balloon/) [**Discord group**](https://discord.gg/hRep4RUj7f) or the [**telegram group**](https://t.me/peass) or **follow** me on **Twitter** [**🐦**](https://github.com/carlospolop/hacktricks/tree/7af18b62b3bdc423e11444677a6a73d4043511e9/\[https:/emojipedia.org/bird/README.md)[**@carlospolopm**](https://twitter.com/carlospolopm)**.**
+* **Share your hacking tricks by submitting PRs to the** [**hacktricks github repo**](https://github.com/carlospolop/hacktricks)**.**
+
+</details>
+
 ## Improve your Wireshark skills
 
 ### Tutorials
@@ -13,77 +27,75 @@ The following tutorials are amazing to learn some cool basic tricks:
 
 ### Analysed Information
 
-#### Expert Information
+**Expert Information**
 
-Clicking on _**Analyze** --&gt; **Expert Information**_ you will have an **overview** of what is happening in the packets **analised**:
+Clicking on _**Analyze** --> **Expert Information**_ you will have an **overview** of what is happening in the packets **analyzed**:
 
-![](../../../.gitbook/assets/image%20%28571%29.png)
+![](<../../../.gitbook/assets/image (570).png>)
 
-#### Resolved Addresses
+**Resolved Addresses**
 
-Under _**Statistics --&gt; Resolved Addresses**_ you can find several **information** that was "**resolved**" by wireshark like port/transport to protocol, mac to manufacturer...  
-This is interesting to know what is implicated in the communication.
+Under _**Statistics --> Resolved Addresses**_ you can find several **information** that was "**resolved**" by wireshark like port/transport to protocol, MAC to the manufacturer, etc. It is interesting to know what is implicated in the communication.
 
-![](../../../.gitbook/assets/image%20%28574%29.png)
+![](<../../../.gitbook/assets/image (571).png>)
 
-#### Protocol Hierarchy
+**Protocol Hierarchy**
 
-Under _**Statistics --&gt; Protocol Hierarchy**_ you can find the **protocols** **involved** in the communication and data about them.
+Under _**Statistics --> Protocol Hierarchy**_ you can find the **protocols** **involved** in the communication and data about them.
 
-![](../../../.gitbook/assets/image%20%28576%29.png)
+![](<../../../.gitbook/assets/image (572).png>)
 
-#### Conversations
+**Conversations**
 
-Under _**Statistics --&gt; Conversations**_ you can find a **summary of the conversations** in the communication and data about them.
+Under _**Statistics --> Conversations**_ you can find a **summary of the conversations** in the communication and data about them.
 
-![](../../../.gitbook/assets/image%20%28572%29.png)
+![](<../../../.gitbook/assets/image (573).png>)
 
-#### **Endpoints**
+**Endpoints**
 
-Under _**Statistics --&gt; Endpoints**_ you can find a **summary of the endpoints** in the communication and data about each of them.
+Under _**Statistics --> Endpoints**_ you can find a **summary of the endpoints** in the communication and data about each of them.
 
-![](../../../.gitbook/assets/image%20%28575%29.png)
+![](<../../../.gitbook/assets/image (575).png>)
 
-#### DNS info
+**DNS info**
 
-Under _**Statistics --&gt; DNS**_ you can find statistics about the DNS request captured.
+Under _**Statistics --> DNS**_ you can find statistics about the DNS request captured.
 
-![](../../../.gitbook/assets/image%20%28577%29.png)
+![](<../../../.gitbook/assets/image (577).png>)
 
-#### I/O Graph
+**I/O Graph**
 
-Under _**Statistics --&gt; I/O Graph**_ you can find a **graph of the communication.**
+Under _**Statistics --> I/O Graph**_ you can find a **graph of the communication.**
 
-![](../../../.gitbook/assets/image%20%28573%29.png)
+![](<../../../.gitbook/assets/image (574).png>)
 
 ### Filters
 
-Here you can find wireshark filter depending on the protocol: [https://www.wireshark.org/docs/dfref/](https://www.wireshark.org/docs/dfref/)  
+Here you can find wireshark filter depending on the protocol: [https://www.wireshark.org/docs/dfref/](https://www.wireshark.org/docs/dfref/)\
 Other interesting filters:
 
-*  `(http.request or ssl.handshake.type == 1) and !(udp.port eq 1900)`
+* `(http.request or ssl.handshake.type == 1) and !(udp.port eq 1900)`
   * HTTP and initial HTTPS traffic
-*  `(http.request or ssl.handshake.type == 1 or tcp.flags eq 0x0002) and !(udp.port eq 1900)`
+* `(http.request or ssl.handshake.type == 1 or tcp.flags eq 0x0002) and !(udp.port eq 1900)`
   * HTTP and initial HTTPS traffic + TCP SYN
-*  `(http.request or ssl.handshake.type == 1 or tcp.flags eq 0x0002 or dns) and !(udp.port eq 1900)`
+* `(http.request or ssl.handshake.type == 1 or tcp.flags eq 0x0002 or dns) and !(udp.port eq 1900)`
   * HTTP and initial HTTPS traffic + TCP SYN + DNS requests
 
 ### Search
 
-If you want to **search** for **content** inside the **packets** of the sessions press _CTRL+f_  
-You can add new layers to the main information bar _\(No., Time, Source...\)_ pressing _right bottom_ and _Edit Column_
+If you want to **search** for **content** inside the **packets** of the sessions press _CTRL+f_. You can add new layers to the main information bar (No., Time, Source, etc.) by pressing the right button and then the edit column.
 
-Practice: [https://www.malware-traffic-analysis.net/](https://www.malware-traffic-analysis.net/)
+Practice: [https://www.malware-traffic-analysis.net/](https://www.malware-traffic-analysis.net)
 
 ## Identifying Domains
 
-You can add a column that show the Host HTTP header:
+You can add a column that shows the Host HTTP header:
 
-![](../../../.gitbook/assets/image%20%28405%29.png)
+![](<../../../.gitbook/assets/image (403).png>)
 
-And a column that add the Server name from an initiating HTTPS connection \(**ssl.handshake.type == 1**\):
+And a column that add the Server name from an initiating HTTPS connection (**ssl.handshake.type == 1**):
 
-![](../../../.gitbook/assets/image%20%28408%29.png)
+![](<../../../.gitbook/assets/image (408).png>)
 
 ## Identifying local hostnames
 
@@ -91,38 +103,34 @@ And a column that add the Server name from an initiating HTTPS connection \(**ss
 
 In current Wireshark instead of `bootp` you need to search for `DHCP`
 
-![](../../../.gitbook/assets/image%20%28409%29.png)
+![](<../../../.gitbook/assets/image (404).png>)
 
 ### From NBNS
 
-![](../../../.gitbook/assets/image%20%28406%29.png)
-
-
-
-
+![](<../../../.gitbook/assets/image (405).png>)
 
 ## Decrypting TLS
 
 ### Decrypting https traffic with server private key
 
-_edit&gt;preference&gt;protocol&gt;ssl&gt;_
+_edit>preference>protocol>ssl>_
 
-![](../../../.gitbook/assets/image%20%28263%29.png)
+![](<../../../.gitbook/assets/image (98).png>)
 
-Press _Edit_ and add all the data of the server and the private key \(_IP, Port, Protocol, Key file and password_\)
+Press _Edit_ and add all the data of the server and the private key (_IP, Port, Protocol, Key file and password_)
 
 ### Decrypting https traffic with symmetric session keys
 
-It turns out that Firefox and Chrome both support logging the symmetric session key used to encrypt TLS traffic to a file. You can then point Wireshark at said file and presto! decrypted TLS traffic. More in: [https://redflagsecurity.net/2019/03/10/decrypting-tls-wireshark/](https://redflagsecurity.net/2019/03/10/decrypting-tls-wireshark/)  
+It turns out that Firefox and Chrome both support logging the symmetric session key used to encrypt TLS traffic to a file. You can then point Wireshark at said file and presto! decrypted TLS traffic. More in: [https://redflagsecurity.net/2019/03/10/decrypting-tls-wireshark/](https://redflagsecurity.net/2019/03/10/decrypting-tls-wireshark/)\
 To detect this search inside the environment for to variable `SSLKEYLOGFILE`
 
-A file of shared keys will looks like this:
+A file of shared keys will look like this:
 
-![](../../../.gitbook/assets/image%20%2862%29.png)
+![](<../../../.gitbook/assets/image (99).png>)
 
-To import this in wireshark go to _edit&gt;preference&gt;protocol&gt;ssl&gt;_ and import it in \(Pre\)-Master-Secret log filename:
+To import this in wireshark go to \_edit > preference > protocol > ssl > and import it in (Pre)-Master-Secret log filename:
 
-![](../../../.gitbook/assets/image%20%28191%29.png)
+![](<../../../.gitbook/assets/image (100).png>)
 
 ## ADB communication
 
@@ -155,5 +163,14 @@ f.write(all_bytes)
 f.close()
 ```
 
+<details>
 
+<summary><strong>Support HackTricks and get benefits!</strong></summary>
 
+* Do you work in a **cybersecurity company**? Do you want to see your **company advertised in HackTricks**? or do you want to have access to the **latest version of the PEASS or download HackTricks in PDF**? Check the [**SUBSCRIPTION PLANS**](https://github.com/sponsors/carlospolop)!
+* Discover [**The PEASS Family**](https://opensea.io/collection/the-peass-family), our collection of exclusive [**NFTs**](https://opensea.io/collection/the-peass-family)
+* Get the [**official PEASS & HackTricks swag**](https://peass.creator-spring.com)
+* **Join the** [**💬**](https://emojipedia.org/speech-balloon/) [**Discord group**](https://discord.gg/hRep4RUj7f) or the [**telegram group**](https://t.me/peass) or **follow** me on **Twitter** [**🐦**](https://github.com/carlospolop/hacktricks/tree/7af18b62b3bdc423e11444677a6a73d4043511e9/\[https:/emojipedia.org/bird/README.md)[**@carlospolopm**](https://twitter.com/carlospolopm)**.**
+* **Share your hacking tricks by submitting PRs to the** [**hacktricks github repo**](https://github.com/carlospolop/hacktricks)**.**
+
+</details>

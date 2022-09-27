@@ -1,18 +1,32 @@
 # Pcap Inspection
 
+## Pcap Inspection
+
+<details>
+
+<summary><strong>Support HackTricks and get benefits!</strong></summary>
+
+* Do you work in a **cybersecurity company**? Do you want to see your **company advertised in HackTricks**? or do you want to have access to the **latest version of the PEASS or download HackTricks in PDF**? Check the [**SUBSCRIPTION PLANS**](https://github.com/sponsors/carlospolop)!
+* Discover [**The PEASS Family**](https://opensea.io/collection/the-peass-family), our collection of exclusive [**NFTs**](https://opensea.io/collection/the-peass-family)
+* Get the [**official PEASS & HackTricks swag**](https://peass.creator-spring.com)
+* **Join the** [**💬**](https://emojipedia.org/speech-balloon/) [**Discord group**](https://discord.gg/hRep4RUj7f) or the [**telegram group**](https://t.me/peass) or **follow** me on **Twitter** [**🐦**](https://github.com/carlospolop/hacktricks/tree/7af18b62b3bdc423e11444677a6a73d4043511e9/\[https:/emojipedia.org/bird/README.md)[**@carlospolopm**](https://twitter.com/carlospolopm)**.**
+* **Share your hacking tricks by submitting PRs to the** [**hacktricks github repo**](https://github.com/carlospolop/hacktricks)**.**
+
+</details>
+
 {% hint style="info" %}
 A note about **PCAP** vs **PCAPNG**: there are two versions of the PCAP file format; **PCAPNG is newer and not supported by all tools**. You may need to convert a file from PCAPNG to PCAP using Wireshark or another compatible tool, in order to work with it in some other tools.
 {% endhint %}
 
 ## Online tools for pcaps
 
-* If the header of your pcap is **broken** you should try to **fix** it using: [http://f00l.de/hacking/**pcapfix.php**](http://f00l.de/hacking/pcapfix.php)\*\*\*\*
-* Extract **information** and search for **malware** inside a pcap in [**PacketTotal**](https://packettotal.com/)\*\*\*\*
-* Search for **malicious activity** using [**www.virustotal.com**](https://www.virustotal.com/) and [**www.hybrid-analysis.com**](https://www.hybrid-analysis.com/)\*\*\*\*
+* If the header of your pcap is **broken** you should try to **fix** it using: [http://f00l.de/hacking/**pcapfix.php**](http://f00l.de/hacking/pcapfix.php)
+* Extract **information** and search for **malware** inside a pcap in [**PacketTotal**](https://packettotal.com)
+* Search for **malicious activity** using [**www.virustotal.com**](https://www.virustotal.com) and [**www.hybrid-analysis.com**](https://www.hybrid-analysis.com)
 
 ## Extract Information
 
-The following tools are useful to extract statistic, files...
+The following tools are useful to extract statistics, files, etc.
 
 ### Wireshark
 
@@ -20,15 +34,17 @@ The following tools are useful to extract statistic, files...
 **If you are going to analyze a PCAP you basically must to know how to use Wireshark**
 {% endhint %}
 
-You can find some Wireshark trick in:
+You can find some Wireshark tricks in:
 
-{% page-ref page="wireshark-tricks.md" %}
+{% content-ref url="wireshark-tricks.md" %}
+[wireshark-tricks.md](wireshark-tricks.md)
+{% endcontent-ref %}
 
 ### Xplico Framework
 
-\*\*\*\*[**Xplico** ](https://github.com/xplico/xplico)_\(only linux\)_ ****can **analyze** a **pcap** and extract information from it. For example, from a pcap file Xplico extracts each email \(POP, IMAP, and SMTP protocols\), all HTTP contents, each VoIP call \(SIP\), FTP, TFTP, and so on.
+[**Xplico** ](https://github.com/xplico/xplico)_(only linux)_ can **analyze** a **pcap** and extract information from it. For example, from a pcap file Xplico, extracts each email (POP, IMAP, and SMTP protocols), all HTTP contents, each VoIP call (SIP), FTP, TFTP, and so on.
 
-#### Install
+**Install**
 
 ```bash
 sudo bash -c 'echo "deb http://repo.xplico.org/ $(lsb_release -s -c) main" /etc/apt/sources.list'
@@ -37,9 +53,9 @@ sudo apt-get update
 sudo apt-get install xplico
 ```
 
-#### Run
+**Run**
 
-```text
+```
 /etc/init.d/apache2 restart
 /etc/init.d/xplico start
 ```
@@ -50,34 +66,34 @@ Then create a **new case**, create a **new session** inside the case and **uploa
 
 ### NetworkMiner
 
-Like Xplico it is a tool to **analyze and extract objects from pcaps**. It has a free edition that you can **download** [**here**](https://www.netresec.com/?page=NetworkMiner). It works with **Windows**.  
-This tool is also useful to get **other information analysed** from the packets in order to be able to know what was happening there in a **quick** way.
+Like Xplico it is a tool to **analyze and extract objects from pcaps**. It has a free edition that you can **download** [**here**](https://www.netresec.com/?page=NetworkMiner). It works with **Windows**.\
+This tool is also useful to get **other information analysed** from the packets in order to be able to know what was happening in a **quicker** way.
 
 ### NetWitness Investigator
 
-You can download [**NetWitness Investigator from here**](https://www.rsa.com/en-us/contact-us/netwitness-investigator-freeware) **\(It works in Windows\)**.  
-This is another useful tool that **analyse the packets** and sort the information in a useful way to **know what is happening inside**.
+You can download [**NetWitness Investigator from here**](https://www.rsa.com/en-us/contact-us/netwitness-investigator-freeware) **(It works in Windows)**.\
+This is another useful tool that **analyses the packets** and sorts the information in a useful way to **know what is happening inside**.
 
-![](../../../.gitbook/assets/image%20%28567%29%20%281%29%20%281%29.png)
+![](<../../../.gitbook/assets/image (567) (1) (1).png>)
 
 ### [BruteShark](https://github.com/odedshimon/BruteShark)
 
-* Extracting and encoding usernames and passwords \(HTTP, FTP, Telnet, IMAP, SMTP...\)
-* Extract authentication hashes and crack them using Hashcat \(Kerberos, NTLM, CRAM-MD5, HTTP-Digest...\)
-* Build visual network diagram \(Network nodes & users\)
+* Extracting and encoding usernames and passwords (HTTP, FTP, Telnet, IMAP, SMTP...)
+* Extract authentication hashes and crack them using Hashcat (Kerberos, NTLM, CRAM-MD5, HTTP-Digest...)
+* Build a visual network diagram (Network nodes & users)
 * Extract DNS queries
 * Reconstruct all TCP & UDP Sessions
 * File Carving
 
 ### Capinfos
 
-```text
+```
 capinfos capture.pcap
 ```
 
 ### Ngrep
 
-If you are **looking** for **something** inside the pcap you can use **ngrep**. And example using the main filters:
+If you are **looking** for **something** inside the pcap you can use **ngrep**. Here is an example using the main filters:
 
 ```bash
 ngrep -I packets.pcap "^GET" "port 80 and tcp and host 192.168 and dst host 192.168 and src host 192.168"
@@ -87,50 +103,54 @@ ngrep -I packets.pcap "^GET" "port 80 and tcp and host 192.168 and dst host 192.
 
 Using common carving techniques can be useful to extract files and information from the pcap:
 
-{% page-ref page="../partitions-file-systems-carving/file-data-carving-recovery-tools.md" %}
+{% content-ref url="../partitions-file-systems-carving/file-data-carving-recovery-tools.md" %}
+[file-data-carving-recovery-tools.md](../partitions-file-systems-carving/file-data-carving-recovery-tools.md)
+{% endcontent-ref %}
 
 ### Capturing credentials
 
-You can us tools like [https://github.com/lgandx/PCredz](https://github.com/lgandx/PCredz) to parse credentials from a pcap or a live interface.
+You can use tools like [https://github.com/lgandx/PCredz](https://github.com/lgandx/PCredz) to parse credentials from a pcap or a live interface.
 
 ## Check Exploits/Malware
 
 ### Suricata
 
-#### Install and setup
+**Install and setup**
 
-```text
+```
 apt-get install suricata
 apt-get install oinkmaster
 echo "url = http://rules.emergingthreats.net/open/suricata/emerging.rules.tar.gz" >> /etc/oinkmaster.conf
 oinkmaster -C /etc/oinkmaster.conf -o /etc/suricata/rules
 ```
 
-#### Check pcap
+**Check pcap**
 
-```text
+```
 suricata -r packets.pcap -c /etc/suricata/suricata.yaml -k none -v -l log
 ```
 
 ### YaraPcap
 
-\*\*\*\*[**YaraPCAP**](https://github.com/kevthehermit/YaraPcap) is a tool that 
+[**YaraPCAP**](https://github.com/kevthehermit/YaraPcap) is a tool that
 
 * Reads a PCAP File and Extracts Http Streams.
 * gzip deflates any compressed streams
 * Scans every file with yara
-* writes a report.txt
-* optionally saves matching files to a Dir
+* Writes a report.txt
+* Optionally saves matching files to a Dir
 
 ### Malware Analysis
 
 Check if you can find any fingerprint of a known malware:
 
-{% page-ref page="../malware-analysis.md" %}
+{% content-ref url="../malware-analysis.md" %}
+[malware-analysis.md](../malware-analysis.md)
+{% endcontent-ref %}
 
 ## Zeek
 
-> Zeek is a passive, open-source network traffic analyzer. Many operators use Zeek as a network security monitor \(NSM\) to support investigations of suspicious or malicious activity. Zeek also supports a wide range of traffic analysis tasks beyond the security domain, including performance measurement and troubleshooting.
+> Zeek is a passive, open-source network traffic analyzer. Many operators use Zeek as a Network Security Monitor (NSM) to support investigations of suspicious or malicious activity. Zeek also supports a wide range of traffic analysis tasks beyond the security domain, including performance measurement and troubleshooting.
 
 Basically, logs created by `zeek` aren't **pcaps**. Therefore you will need to use **other tools** to analyse the logs where the **information** about the pcaps are.
 
@@ -153,7 +173,7 @@ cat conn.log | zeek-cut id.orig_h id.resp_h id.resp_p proto duration | awk 'BEGI
 10.55.100.107   111.221.29.113  443     tcp     86220.1
 10.55.100.110   40.77.229.82    443     tcp     86160.1
 
-#Get the number of connectionssummed up per each line
+#Get the number of connections summed up per each line
 cat conn.log | zeek-cut id.orig_h id.resp_h duration | awk 'BEGIN{ FS="\t" } { arr[$1 FS $2] += $3; count[$1 FS $2] += 1 } END{ for (key in arr) printf "%s%s%s%s%s\n", key, FS, count[key], FS, arr[key] }' | sort -nrk 4 | head -n 10
 
 10.55.100.100   65.52.108.225   1       86222.4
@@ -167,7 +187,7 @@ cat conn.log | zeek-cut id.orig_h id.resp_h id.resp_p proto service | grep '1.1.
 cat conn.log | zeek-cut id.orig_h id.resp_h id.resp_p proto | awk 'BEGIN{ FS="\t" } { arr[$1 FS $2 FS $3 FS $4] += 1 } END{ for (key in arr) printf "%s%s%s\n", key, FS, arr[key] }' | sort -nrk 5 | head -n 10
 
 
-### RITA
+# RITA
 #Something similar can be done with the tool rita
 rita show-long-connections -H --limit 10 zeek_logs
 
@@ -192,29 +212,41 @@ Score,Source IP,Destination IP,Connections,Avg Bytes,Intvl Range,Size Range,Top 
 #Get info about each DNS request performed
 cat dns.log | zeek-cut -c id.orig_h query qtype_name answers
 
-#Get number of times each domain was requestedand get top 10
+#Get the number of times each domain was requested and get the top 10
 cat dns.log | zeek-cut query | sort | uniq | rev | cut -d '.' -f 1-2 | rev | sort | uniq -c | sort -nr | head -n 10
 
 #Get all the IPs
 cat dns.log | zeek-cut id.orig_h query | grep 'example\.com' | cut -f 1 | sort | uniq -c
 
-#Sort the most common dnsrecord request (should be A)
+#Sort the most common DNS record request (should be A)
 cat dns.log | zeek-cut qtype_name | sort | uniq -c | sort -nr
 
 #See top DNS domain requested with rita
 rita show-exploded-dns -H --limit 10 zeek_logs
-
-
-
 ```
 
 ## Other pcap analysis tricks
 
-{% page-ref page="dnscat-exfiltration.md" %}
+{% content-ref url="dnscat-exfiltration.md" %}
+[dnscat-exfiltration.md](dnscat-exfiltration.md)
+{% endcontent-ref %}
 
-{% page-ref page="wifi-pcap-analysis.md" %}
+{% content-ref url="wifi-pcap-analysis.md" %}
+[wifi-pcap-analysis.md](wifi-pcap-analysis.md)
+{% endcontent-ref %}
 
-{% page-ref page="usb-keystrokes.md" %}
+{% content-ref url="usb-keystrokes.md" %}
+[usb-keystrokes.md](usb-keystrokes.md)
+{% endcontent-ref %}
 
+<details>
 
+<summary><strong>Support HackTricks and get benefits!</strong></summary>
 
+* Do you work in a **cybersecurity company**? Do you want to see your **company advertised in HackTricks**? or do you want to have access to the **latest version of the PEASS or download HackTricks in PDF**? Check the [**SUBSCRIPTION PLANS**](https://github.com/sponsors/carlospolop)!
+* Discover [**The PEASS Family**](https://opensea.io/collection/the-peass-family), our collection of exclusive [**NFTs**](https://opensea.io/collection/the-peass-family)
+* Get the [**official PEASS & HackTricks swag**](https://peass.creator-spring.com)
+* **Join the** [**💬**](https://emojipedia.org/speech-balloon/) [**Discord group**](https://discord.gg/hRep4RUj7f) or the [**telegram group**](https://t.me/peass) or **follow** me on **Twitter** [**🐦**](https://github.com/carlospolop/hacktricks/tree/7af18b62b3bdc423e11444677a6a73d4043511e9/\[https:/emojipedia.org/bird/README.md)[**@carlospolopm**](https://twitter.com/carlospolopm)**.**
+* **Share your hacking tricks by submitting PRs to the** [**hacktricks github repo**](https://github.com/carlospolop/hacktricks)**.**
+
+</details>

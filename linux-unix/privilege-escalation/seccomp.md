@@ -1,15 +1,38 @@
-# Seccomp
 
-## Basic Information
 
-**Seccomp** or Secure Computing mode is a feature of Linux kernel which can act as **syscall filter**.  
+<details>
+
+<summary><strong>Support HackTricks and get benefits!</strong></summary>
+
+- Do you work in a **cybersecurity company**? Do you want to see your **company advertised in HackTricks**? or do you want to have access to the **latest version of the PEASS or download HackTricks in PDF**? Check the [**SUBSCRIPTION PLANS**](https://github.com/sponsors/carlospolop)!
+
+- Discover [**The PEASS Family**](https://opensea.io/collection/the-peass-family), our collection of exclusive [**NFTs**](https://opensea.io/collection/the-peass-family)
+
+- Get the [**official PEASS & HackTricks swag**](https://peass.creator-spring.com)
+
+- **Join the** [**💬**](https://emojipedia.org/speech-balloon/) [**Discord group**](https://discord.gg/hRep4RUj7f) or the [**telegram group**](https://t.me/peass) or **follow** me on **Twitter** [**🐦**](https://github.com/carlospolop/hacktricks/tree/7af18b62b3bdc423e11444677a6a73d4043511e9/\[https:/emojipedia.org/bird/README.md)[**@carlospolopm**](https://twitter.com/carlospolopm)**.**
+
+- **Share your hacking tricks by submitting PRs to the** [**hacktricks github repo**](https://github.com/carlospolop/hacktricks)**.**
+
+</details>
+
+
+# Basic Information
+
+**Seccomp **or Secure Computing mode, in summary, is a feature of Linux kernel which can act as **syscall filter**.\
 Seccomp has 2 modes.
 
-### **Original/Strict Mode**
+**seccomp** (short for **secure computing mode**) is a computer security facility in the **Linux** **kernel**. seccomp allows a process to make a one-way transition into a "secure" state where **it cannot make any system calls except** `exit()`, `sigreturn()`, `read()` and `write()` to **already-open** file descriptors. Should it attempt any other system calls, the **kernel** will **terminate** the **process** with SIGKILL or SIGSYS. In this sense, it does not virtualize the system's resources but isolates the process from them entirely.
 
-In this mode ****Seccomp **only allow the syscalls**  `exit()`, `sigreturn()`, `read()` and `write()` to already-open file descriptors. If any other syscall is made, the process is killed using SIGKILL
+seccomp mode is **enabled via the `prctl(2)` system call** using the `PR_SET_SECCOMP` argument, or (since Linux kernel 3.17) via the `seccomp(2)` system call. seccomp mode used to be enabled by writing to a file, `/proc/self/seccomp`, but this method was removed in favor of `prctl()`. In some kernel versions, seccomp disables the `RDTSC` x86 instruction, which returns the number of elapsed processor cycles since power-on, used for high-precision timing.
 
-{% code title="seccomp\_strict.c" %}
+**seccomp-bpf** is an extension to seccomp that allows **filtering of system calls using a configurable policy** implemented using Berkeley Packet Filter rules. It is used by OpenSSH and vsftpd as well as the Google Chrome/Chromium web browsers on Chrome OS and Linux. (In this regard seccomp-bpf achieves similar functionality, but with more flexibility and higher performance, to the older systrace—which seems to be no longer supported for Linux.)
+
+## **Original/Strict Mode**
+
+In this mode** **Seccomp **only allow the syscalls**  `exit()`, `sigreturn()`, `read()` and `write()` to already-open file descriptors. If any other syscall is made, the process is killed using SIGKILL
+
+{% code title="seccomp_strict.c" %}
 ```c
 #include <fcntl.h>
 #include <stdio.h>
@@ -43,11 +66,11 @@ int main(int argc, char **argv)
 ```
 {% endcode %}
 
-### Seccomp-bpf
+## Seccomp-bpf
 
 This mode allows f**iltering of system calls using a configurable policy** implemented using Berkeley Packet Filter rules.
 
-{% code title="seccomp\_bpf.c" %}
+{% code title="seccomp_bpf.c" %}
 ```c
 #include <seccomp.h>
 #include <unistd.h>
@@ -97,9 +120,9 @@ void main(void) {
 ```
 {% endcode %}
 
-## Seccomp in Docker
+# Seccomp in Docker
 
-**Seccomp-bpf** is supported by **Docker** to restrict the **syscalls** from the containers effectively decreasing the surface area. You can find the **syscalls blocked** by **default** in [https://docs.docker.com/engine/security/seccomp/](https://docs.docker.com/engine/security/seccomp/) and the **default seccomp profile** can be found here [https://github.com/moby/moby/blob/master/profiles/seccomp/default.json](https://github.com/moby/moby/blob/master/profiles/seccomp/default.json).  
+**Seccomp-bpf** is supported by **Docker **to restrict the **syscalls **from the containers effectively decreasing the surface area. You can find the **syscalls blocked **by **default **in [https://docs.docker.com/engine/security/seccomp/](https://docs.docker.com/engine/security/seccomp/) and the **default seccomp profile **can be found here [https://github.com/moby/moby/blob/master/profiles/seccomp/default.json](https://github.com/moby/moby/blob/master/profiles/seccomp/default.json).\
 You can run a docker container with a **different seccomp** policy with:
 
 ```bash
@@ -109,11 +132,37 @@ docker run --rm \
              hello-world
 ```
 
-If you want for example to **forbid** a container of executing some **syscall** like `uname` you could download the default profile from [https://github.com/moby/moby/blob/master/profiles/seccomp/default.json](https://github.com/moby/moby/blob/master/profiles/seccomp/default.json) and just **remove the `uname` string from the list**.  
-If you wan to make sure that **some binary doesn't work inside a a docker container** you could use strace to list the syscalls the binary is using and then forbid them.  
-In the following example the **syscalls** of `uname` are discovered:
+If you want for example to **forbid **a container of executing some **syscall **like` uname` you could download the default profile from [https://github.com/moby/moby/blob/master/profiles/seccomp/default.json](https://github.com/moby/moby/blob/master/profiles/seccomp/default.json) and just **remove the `uname` string from the list**.\
+If you want to make sure that **some binary doesn't work inside a a docker container** you could use strace to list the syscalls the binary is using and then forbid them.\
+In the following example the **syscalls **of `uname` are discovered:
 
 ```bash
 docker run -it --security-opt seccomp=default.json modified-ubuntu strace uname
 ```
+
+{% hint style="info" %}
+If you are using **Docker just to launch an application**, you can **profile** it with **`strace`** and **just allow the syscalls** it needs
+{% endhint %}
+
+## Deactivate it in Docker
+
+Launch a container with the flag: **`--security-opt seccomp=unconfined`**
+
+
+<details>
+
+<summary><strong>Support HackTricks and get benefits!</strong></summary>
+
+- Do you work in a **cybersecurity company**? Do you want to see your **company advertised in HackTricks**? or do you want to have access to the **latest version of the PEASS or download HackTricks in PDF**? Check the [**SUBSCRIPTION PLANS**](https://github.com/sponsors/carlospolop)!
+
+- Discover [**The PEASS Family**](https://opensea.io/collection/the-peass-family), our collection of exclusive [**NFTs**](https://opensea.io/collection/the-peass-family)
+
+- Get the [**official PEASS & HackTricks swag**](https://peass.creator-spring.com)
+
+- **Join the** [**💬**](https://emojipedia.org/speech-balloon/) [**Discord group**](https://discord.gg/hRep4RUj7f) or the [**telegram group**](https://t.me/peass) or **follow** me on **Twitter** [**🐦**](https://github.com/carlospolop/hacktricks/tree/7af18b62b3bdc423e11444677a6a73d4043511e9/\[https:/emojipedia.org/bird/README.md)[**@carlospolopm**](https://twitter.com/carlospolopm)**.**
+
+- **Share your hacking tricks by submitting PRs to the** [**hacktricks github repo**](https://github.com/carlospolop/hacktricks)**.**
+
+</details>
+
 
